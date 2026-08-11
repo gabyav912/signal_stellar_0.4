@@ -430,6 +430,15 @@
             aviso.remove();
         }, 2500);
     }
+    function cerrarSesion() {
+    if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+        // Elimina los datos de la sesión activa
+        localStorage.removeItem("usuarioStellarSesion");
+        
+        // Redirige a la pantalla principal
+        window.location.href = "index.html";
+    }
+    }
 </script>
 
 </body>
