@@ -234,15 +234,29 @@
 </footer>
 
 <script>
-    let nombre = localStorage.getItem("nombre");
-    let apellido = localStorage.getItem("apellido");
+document.addEventListener("DOMContentLoaded", () => {
+    const sesionRaw = localStorage.getItem("usuarioStellarSesion");
 
-    if(nombre){
-        let inicialNombre = nombre.charAt(0) || "";
-        let inicialApellido = apellido ? apellido.charAt(0) : "";
-        document.getElementById("iniciales").textContent =
-        (inicialNombre + inicialApellido).toUpperCase();
+    // Si no hay sesión, vuelve a index.html
+    if (!sesionRaw) {
+        window.location.href = "index.html";
+        return;
     }
+
+    const sesion = JSON.parse(sesionRaw);
+
+    // Obtener iniciales desde el nombre registrado
+    if (sesion.nombre) {
+        const partes = sesion.nombre.trim().split(" ");
+        let iniciales = partes[0].charAt(0);
+        if (partes.length > 1) {
+            iniciales += partes[partes.length - 1].charAt(0);
+        }
+        document.getElementById("iniciales").textContent = iniciales.toUpperCase();
+    } else if (sesion.usuario) {
+        document.getElementById("iniciales").textContent = sesion.usuario.charAt(0).toUpperCase();
+    }
+});
 </script>
 
 </body>
